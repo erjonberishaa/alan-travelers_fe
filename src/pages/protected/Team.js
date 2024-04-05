@@ -3,17 +3,14 @@ import { useDispatch } from 'react-redux'
 import { setPageTitle } from '../../features/common/headerSlice'
 import Team from '../../features/settings/team'
 
-function InternalPage(){
+function InternalPage() {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(setPageTitle({ title : "Team Members"}))
-      }, [])
+        dispatch(setPageTitle({ title: 'Team Members' }))
+    }, [])
 
-
-    return(
-        <Team/>
-    )
+    return <Team />
 }
 
 export default InternalPage

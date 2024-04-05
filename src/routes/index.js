@@ -17,64 +17,63 @@ const GettingStarted = lazy(() => import('../pages/GettingStarted'))
 const DocFeatures = lazy(() => import('../pages/DocFeatures'))
 const DocComponents = lazy(() => import('../pages/DocComponents'))
 
-
 const routes = [
-  {
-    path: '/dashboard', // the url
-    component: Dashboard, // view rendered
-  },
-  {
-    path: '/welcome', // the url
-    component: Welcome, // view rendered
-  },
-  {
-    path: '/leads',
-    component: Leads,
-  },
-  {
-    path: '/settings-team',
-    component: Team,
-  },
-  {
-    path: '/transactions',
-    component: Transactions,
-  },
-  {
-    path: '/settings-profile',
-    component: ProfileSettings,
-  },
-  {
-    path: '/settings-billing',
-    component: Bills,
-  },
-  {
-    path: '/getting-started',
-    component: GettingStarted,
-  },
-  {
-    path: '/features',
-    component: DocFeatures,
-  },
-  {
-    path: '/components',
-    component: DocComponents,
-  },
-  {
-    path: '/integration',
-    component: Integration,
-  },
-  {
-    path: '/charts',
-    component: Charts,
-  },
-  {
-    path: '/404',
-    component: Page404,
-  },
-  {
-    path: '/blank',
-    component: Blank,
-  },
+    {
+        path: '/dashboard', // the url
+        component: Dashboard, // view rendered
+    },
+    {
+        path: '/welcome', // the url
+        component: Welcome, // view rendered
+    },
+    {
+        path: '/leads',
+        component: Leads,
+    },
+    {
+        path: '/settings-team',
+        component: Team,
+    },
+    {
+        path: '/transactions',
+        component: Transactions,
+    },
+    {
+        path: '/settings-profile',
+        component: ProfileSettings,
+    },
+    {
+        path: '/settings-billing',
+        component: Bills,
+    },
+    {
+        path: '/getting-started',
+        component: GettingStarted,
+    },
+    {
+        path: '/features',
+        component: DocFeatures,
+    },
+    {
+        path: '/components',
+        component: DocComponents,
+    },
+    {
+        path: '/integration',
+        component: Integration,
+    },
+    {
+        path: '/charts',
+        component: Charts,
+    },
+    {
+        path: '/404',
+        component: Page404,
+    },
+    {
+        path: '/blank',
+        component: Blank,
+    },
 ]
 
 export default routes

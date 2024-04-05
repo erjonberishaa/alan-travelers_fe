@@ -1,11 +1,9 @@
-import {useState, useRef} from 'react'
-import {Link} from 'react-router-dom'
+import { useState, useRef } from 'react'
+import { Link } from 'react-router-dom'
 import DocComponents from '../features/documentation/DocComponents'
 
-function ExternalPage(){
-
-
-    return(
+function ExternalPage() {
+    return (
         <div className="">
             <DocComponents />
         </div>

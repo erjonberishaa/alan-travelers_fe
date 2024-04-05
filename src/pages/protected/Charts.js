@@ -3,17 +3,14 @@ import { useDispatch } from 'react-redux'
 import Charts from '../../features/charts'
 import { setPageTitle } from '../../features/common/headerSlice'
 
-function InternalPage(){
+function InternalPage() {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(setPageTitle({ title : "Analytics"}))
-      }, [])
+        dispatch(setPageTitle({ title: 'Analytics' }))
+    }, [])
 
-
-    return(
-        <Charts />
-    )
+    return <Charts />
 }
 
 export default InternalPage
