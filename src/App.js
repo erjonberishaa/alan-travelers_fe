@@ -16,7 +16,9 @@ const Login = lazy(() => import('./pages/Login'))
 const ForgotPassword = lazy(() => import('./pages/ForgotPassword'))
 const Register = lazy(() => import('./pages/Register'))
 const Documentation = lazy(() => import('./pages/Documentation'))
-
+const Landing = lazy(() => import('./pages/Landing'))
+const Header = lazy(() => import('./containers/Header'))
+const Footer = lazy(() => import('./containers/Footer'))
 // Initializing different libraries
 initializeApp()
 
@@ -32,8 +34,11 @@ function App() {
     return (
         <>
             <Router>
+                <Header />
+
                 <Routes>
                     <Route path="/login" element={<Login />} />
+                    <Route path="/" element={<Landing />} />
                     <Route
                         path="/forgot-password"
                         element={<ForgotPassword />}
@@ -54,6 +59,7 @@ function App() {
                         }
                     />
                 </Routes>
+                <Footer />
             </Router>
         </>
     )
