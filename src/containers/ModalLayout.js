@@ -3,6 +3,7 @@ import { MODAL_BODY_TYPES } from '../utils/globalConstantUtil'
 import { useSelector, useDispatch } from 'react-redux'
 import { closeModal } from '../features/common/modalSlice'
 import AddLeadModalBody from '../features/leads/components/AddLeadModalBody'
+import AddTicketModalModalBody from '../features/tickets/components/AddTicketModalBody'
 import ConfirmationModalBody from '../features/common/components/ConfirmationModalBody'
 
 function ModalLayout() {
@@ -39,6 +40,12 @@ function ModalLayout() {
                         {
                             [MODAL_BODY_TYPES.LEAD_ADD_NEW]: (
                                 <AddLeadModalBody
+                                    closeModal={close}
+                                    extraObject={extraObject}
+                                />
+                            ),
+                            [MODAL_BODY_TYPES.TICKET_ADD_NEW]: (
+                                <AddTicketModalModalBody
                                     closeModal={close}
                                     extraObject={extraObject}
                                 />
