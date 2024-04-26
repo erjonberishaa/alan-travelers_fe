@@ -1,11 +1,10 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import axios from 'axios'
+import { get } from '../../api/api'
 
 export const getTicketsContent = createAsyncThunk(
     '/tickets/content',
     async () => {
-        const response = await axios.get('http://localhost:8080/tickets', {})
-        console.log(response.data)
+        const response = await get('tickets')
         return response
     }
 )

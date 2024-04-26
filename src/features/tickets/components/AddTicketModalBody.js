@@ -4,14 +4,15 @@ import InputText from '../../../components/Input/InputText'
 import ErrorText from '../../../components/Typography/ErrorText'
 import { showNotification } from '../../common/headerSlice'
 import { addNewTicket } from '../ticketSlice'
+import { post } from '../../../api/api'
 
 const INITIAL_TICKET_OBJ = {
     passengerName: '',
-    seatNumber: '',
+    seatNumber: 1,
     ticketClass: '',
     ticketPrice: '',
     ticketStatus: '',
-    bookingDate: '',
+    bookingDate: new Date(),
     passengerEmail: '',
     passengerPhoneNumber: '',
     paymentStatus: '',
@@ -31,16 +32,9 @@ function AddTicketModalBody({ closeModal }) {
                 setErrorMessage('Please fill out all required fields.')
                 return
             }
-            const response = await fetch(`http://localhost:8080/tickets/1`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(ticketObj),
-            })
-            const data = await response.json()
+            const response = await post('tickets/1', ticketObj)
             // Handle success response
-            dispatch(addNewTicket({ newTicketObj: data }))
+            dispatch(addNewTicket({ newTicketObj: response.data }))
             dispatch(
                 showNotification({ message: 'New Ticket Added!', status: 1 })
             )
@@ -81,7 +75,7 @@ function AddTicketModalBody({ closeModal }) {
             />
 
             <InputText
-                type="text"
+                type="number"
                 defaultValue={ticketObj.seatNumber}
                 updateType="seatNumber"
                 containerStyle="mt-4"
@@ -99,7 +93,7 @@ function AddTicketModalBody({ closeModal }) {
             />
 
             <InputText
-                type="text"
+                type="number"
                 defaultValue={ticketObj.ticketPrice}
                 updateType="ticketPrice"
                 containerStyle="mt-4"
@@ -117,14 +111,13 @@ function AddTicketModalBody({ closeModal }) {
             />
 
             <InputText
-                type="text"
+                type="date"
                 defaultValue={ticketObj.bookingDate}
                 updateType="bookingDate"
                 containerStyle="mt-4"
                 labelTitle="Booking Date"
                 updateFormValue={updateFormValue}
             />
-
             <InputText
                 type="email"
                 defaultValue={ticketObj.passengerEmail}
@@ -135,7 +128,7 @@ function AddTicketModalBody({ closeModal }) {
             />
 
             <InputText
-                type="text"
+                type="tel"
                 defaultValue={ticketObj.passengerPhoneNumber}
                 updateType="passengerPhoneNumber"
                 containerStyle="mt-4"

@@ -17,7 +17,7 @@ export const get = async (endpoint) => {
 export const post = async (endpoint, data) => {
     try {
         const response = await axios.post(`${apiUrl}/${endpoint}`, data)
-        return response.data
+        return response
     } catch (error) {
         console.error('Error:', error)
         throw error
@@ -28,7 +28,7 @@ export const post = async (endpoint, data) => {
 export const put = async (endpoint, data) => {
     try {
         const response = await axios.put(`${apiUrl}/${endpoint}`, data)
-        return response.data
+        return response
     } catch (error) {
         console.error('Error:', error)
         throw error
@@ -39,7 +39,7 @@ export const put = async (endpoint, data) => {
 export const del = async (endpoint) => {
     try {
         const response = await axios.delete(`${apiUrl}/${endpoint}`)
-        return response.data
+        return response
     } catch (error) {
         console.error('Error:', error)
         throw error
