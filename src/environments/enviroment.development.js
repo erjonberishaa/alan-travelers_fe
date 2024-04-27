@@ -1,8 +1,8 @@
 export const environment = {
     production: false,
     environmentName: 'local',
-    apiUrl: 'https://localhost:3000',
+    apiUrl: 'http://localhost:8080',
     userName: 'admin',
     email: 'admin@example.com',
-    password: 'admin123'
-};
+    password: 'admin123',
+}
