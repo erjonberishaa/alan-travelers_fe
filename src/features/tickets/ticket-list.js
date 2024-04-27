@@ -3,7 +3,7 @@ import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import TitleCard from '../../components/Cards/TitleCard'
 import { openModal } from '../common/modalSlice'
-import { deleteTicket, getTicketsContent } from './ticketSlice'
+import { deleteTicket, getTicketsContent, addNewTicket } from './ticketSlice'
 import {
     CONFIRMATION_MODAL_CLOSE_TYPES,
     MODAL_BODY_TYPES,
@@ -37,24 +37,28 @@ const TopSideButtons = () => {
 
 const Tickets = () => {
     const { tickets } = useSelector((state) => state.ticket)
+
     const dispatch = useDispatch()
 
     useEffect(() => {
         dispatch(getTicketsContent())
     }, [dispatch])
 
-    const deleteCurrentTicket = (index) => {
-        dispatch(
-            openModal({
-                title: 'Confirmation',
-                bodyType: MODAL_BODY_TYPES.CONFIRMATION,
-                extraObject: {
-                    message: `Are you sure you want to delete this ticket?`,
-                    type: CONFIRMATION_MODAL_CLOSE_TYPES.TICKET_DELETE,
-                    index,
-                },
-            })
-        )
+    const deleteCurrentTicket = async (id) => {
+        try {
+            await dispatch(deleteTicket(id))
+
+            dispatch(getTicketsContent())
+
+            dispatch(
+                showNotification({
+                    message: 'Ticket deleted successfully!',
+                    status: 1,
+                })
+            )
+        } catch (error) {
+            console.error('Error deleting ticket:', error)
+        }
     }
 
     return (
@@ -77,8 +81,8 @@ const Tickets = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {tickets.map((ticket, index) => (
-                                <tr key={index}>
+                            {tickets.map((ticket) => (
+                                <tr key={ticket.id}>
                                     <td>{ticket.passengerName}</td>
                                     <td>{ticket.passengerEmail}</td>
                                     <td>
@@ -90,9 +94,8 @@ const Tickets = () => {
                                     <td>{ticket.passengerPhoneNumber}</td>
                                     <td>
                                         <button
-                                            className="btn btn-square btn-ghost"
                                             onClick={() =>
-                                                deleteCurrentTicket(index)
+                                                deleteCurrentTicket(ticket.id)
                                             }
                                         >
                                             <TrashIcon className="w-5" />

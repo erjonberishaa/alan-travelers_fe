@@ -1,14 +1,20 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { get } from '../../api/api'
+import { get, del } from '../../api/api'
 
 export const getTicketsContent = createAsyncThunk(
     '/tickets/content',
     async () => {
         const response = await get('tickets')
-        return response
+        return { data: response.data }
     }
 )
-
+export const deleteTicket = createAsyncThunk(
+    '/tickets/delete',
+    async (ticketId) => {
+        await del(`tickets/${ticketId}`)
+        return ticketId
+    }
+)
 export const ticketsSlice = createSlice({
     name: 'tickets',
     initialState: {
@@ -20,10 +26,11 @@ export const ticketsSlice = createSlice({
             let { newTicketObj } = action.payload
             state.tickets = [...state.tickets, newTicketObj]
         },
-
         deleteTicket: (state, action) => {
-            let { index } = action.payload
-            state.tickets.splice(index, 1)
+            const ticketIdToDelete = action.payload
+            state.tickets = state.tickets.filter(
+                (ticket) => ticket.id !== ticketIdToDelete
+            )
         },
     },
 
@@ -41,6 +48,6 @@ export const ticketsSlice = createSlice({
     },
 })
 
-export const { addNewTicket, deleteTicket } = ticketsSlice.actions
+export const { addNewTicket } = ticketsSlice.actions
 
 export default ticketsSlice.reducer
