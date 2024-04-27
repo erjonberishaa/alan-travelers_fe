@@ -1,11 +1,20 @@
 import axios from 'axios'
-
 import { environment } from '../environments/enviroment.development'
+
 const apiUrl = environment.apiUrl
-// Function to make a GET request
-export const get = async (endpoint) => {
+
+const axiosInstance = axios.create({
+    baseURL: apiUrl,
+    headers: {
+        'Content-Type': 'application/json',
+    },
+})
+const serializeHeaders = (headers) => {
+    return headers.toJSON()
+}
+export const get = async (endpoint, headers = {}) => {
     try {
-        const response = await axios.get(`${apiUrl}/${endpoint}`)
+        const response = await axiosInstance.get(endpoint, { headers })
         return response
     } catch (error) {
         console.error('Error:', error)
@@ -13,10 +22,9 @@ export const get = async (endpoint) => {
     }
 }
 
-// Function to make a POST request
-export const post = async (endpoint, data) => {
+export const post = async (endpoint, data, headers = {}) => {
     try {
-        const response = await axios.post(`${apiUrl}/${endpoint}`, data)
+        const response = await axiosInstance.post(endpoint, data, { headers })
         return response
     } catch (error) {
         console.error('Error:', error)
@@ -24,10 +32,9 @@ export const post = async (endpoint, data) => {
     }
 }
 
-// Function to make a PUT request
-export const put = async (endpoint, data) => {
+export const put = async (endpoint, data, headers = {}) => {
     try {
-        const response = await axios.put(`${apiUrl}/${endpoint}`, data)
+        const response = await axiosInstance.put(endpoint, data, { headers })
         return response
     } catch (error) {
         console.error('Error:', error)
@@ -35,10 +42,9 @@ export const put = async (endpoint, data) => {
     }
 }
 
-// Function to make a DELETE request
-export const del = async (endpoint) => {
+export const del = async (endpoint, headers = {}) => {
     try {
-        const response = await axios.delete(`${apiUrl}/${endpoint}`)
+        const response = await axiosInstance.delete(endpoint, { headers })
         return response
     } catch (error) {
         console.error('Error:', error)
