@@ -33,6 +33,11 @@ const routes = [
         name: 'Tickets', // name that appear in Sidebar
     },
     {
+        path: '/app/hotels', // url
+        icon: <InboxArrowDownIcon className={iconClasses} />, // icon component
+        name: 'Hotels', // name that appear in Sidebar
+    },
+    {
         path: '/app/leads', // url
         icon: <InboxArrowDownIcon className={iconClasses} />, // icon component
         name: 'Leads', // name that appear in Sidebar
