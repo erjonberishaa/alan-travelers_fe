@@ -14,7 +14,7 @@ const TaxiTab = () => {
                 placeholder="Dropoff Location"
                 className="input input-bordered flex-grow mr-2 mb-2 md:mb-0"
                 value={dropoffLocation}
-                onChange={(e) => setOrigin(e.target.value)}
+                onChange={(e) => setDropoffLocation(e.target.value)}
                 required
             />
             <input
@@ -22,14 +22,14 @@ const TaxiTab = () => {
                 placeholder="Pickup Location"
                 className="input input-bordered flex-grow mr-2 mb-2 md:mb-0"
                 value={pickupLocation}
-                onChange={(e) => setDestination(e.target.value)}
+                onChange={(e) => setPickupLocation(e.target.value)}
                 required
             />
             <input
                 type="time"
                 className="input input-bordered flex-grow mr-2 mb-2 md:mb-0"
                 value={time}
-                onChange={(e) => setStartDate(e.target.value)}
+                onChange={(e) => setTime(e.target.value)}
                 required
             />
             <input
@@ -42,10 +42,10 @@ const TaxiTab = () => {
             />
             <input
                 type="date"
-                placeholder="Dropoff Location"
+                placeholder="Date"
                 className="input input-bordered flex-grow mr-2 mb-2 md:mb-0"
                 value={date}
-                onChange={(e) => setOrigin(e.target.value)}
+                onChange={(e) => setDate(e.target.value)}
                 required
             />
             <button className="btn btn-primary flex-shrink-0">Taxi</button>

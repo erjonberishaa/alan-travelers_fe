@@ -4,7 +4,7 @@ import { PiAirplaneInFlightFill } from 'react-icons/pi'
 import { MdLocalHotel } from 'react-icons/md'
 import { IoCarSportSharp } from 'react-icons/io5'
 import FlightsTab from '../components/Tabs/FlightsTab'
-import TaxiTab from '../features/tickets/components/TaxiTab'
+import TaxiTab from '../components/Tabs/TaxiTab'
 const Hero = () => {
     return (
         <div className="p-8 min-h-screen">
@@ -46,15 +46,14 @@ const Hero = () => {
                         this one for the next. The tab JavaScript swaps classes
                         to control the content visibility and styling.
                     </Tabs.Item>
-                    <Tabs.Item title="TaxiTab" icon={IoCarSportSharp}>
-                        This is{' '}
-                        <span className="font-medium text-gray-800 dark:text-white">
-                            Dashboard tab's associated content
-                        </span>
-                        . Clicking another tab will toggle the visibility of
-                        this one for the next. The tab JavaScript swaps classes
-                        to control the content visibility and styling.
+                    <Tabs.Item
+                        active
+                        title="Taxi"
+                        icon={IoCarSportSharp}
+                    >
+                        <TaxiTab />
                     </Tabs.Item>
+                    
                 </Tabs>
             </div>
         </div>
