@@ -5,6 +5,7 @@ import { closeModal } from '../features/common/modalSlice'
 import AddLeadModalBody from '../features/leads/components/AddLeadModalBody'
 import AddTicketModalModalBody from '../features/tickets/components/AddTicketModalBody'
 import ConfirmationModalBody from '../features/common/components/ConfirmationModalBody'
+import AddTaxiModalModalBody from '../features/tickets/components/AddTaxiModalBody'
 
 function ModalLayout() {
     const { isOpen, bodyType, size, extraObject, title } = useSelector(
@@ -46,6 +47,12 @@ function ModalLayout() {
                             ),
                             [MODAL_BODY_TYPES.TICKET_ADD_NEW]: (
                                 <AddTicketModalModalBody
+                                    closeModal={close}
+                                    extraObject={extraObject}
+                                />
+                            ),
+                            [MODAL_BODY_TYPES.TICKET_ADD_NEW]: (
+                                <AddTaxiModalModalBody
                                     closeModal={close}
                                     extraObject={extraObject}
                                 />
