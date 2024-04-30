@@ -1,43 +1,74 @@
-import { useState, useRef } from 'react'
-import { Link } from 'react-router-dom'
-import LandingIntro from './LandingIntro'
-import ErrorText from '../../components/Typography/ErrorText'
-import InputText from '../../components/Input/InputText'
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import LandingIntro from './LandingIntro';
+import ErrorText from '../../components/Typography/ErrorText';
+import InputText from '../../components/Input/InputText';
 
 function Register() {
     const INITIAL_REGISTER_OBJ = {
-        name: '',
+        firstName: '',
+        lastName: '',
+        phoneNumber: '',
+        email: '',
         password: '',
-        emailId: '',
-    }
+    };
 
-    const [loading, setLoading] = useState(false)
-    const [errorMessage, setErrorMessage] = useState('')
-    const [registerObj, setRegisterObj] = useState(INITIAL_REGISTER_OBJ)
+    const [loading, setLoading] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
+    const [registerObj, setRegisterObj] = useState(INITIAL_REGISTER_OBJ);
 
-    const submitForm = (e) => {
-        e.preventDefault()
-        setErrorMessage('')
+    const saveUser = async (userData) => {
+        try {
+            const response = await fetch('http://localhost:8080/users', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(userData),
+            });
 
-        if (registerObj.name.trim() === '')
-            return setErrorMessage('Name is required! (use any value)')
-        if (registerObj.emailId.trim() === '')
-            return setErrorMessage('Email Id is required! (use any value)')
-        if (registerObj.password.trim() === '')
-            return setErrorMessage('Password is required! (use any value)')
-        else {
-            setLoading(true)
-            // Call API to check user credentials and save token in localstorage
-            localStorage.setItem('token', 'DumyTokenHere')
-            setLoading(false)
-            window.location.href = '/app/welcome'
+            if (!response.ok) {
+                throw new Error('Failed to register user.');
+            }
+
+            const data = await response.json();
+            console.log('User registered successfully:', data);
+
+            window.location.reload();
+        } catch (error) {
+            throw new Error('Failed to register user.');
         }
-    }
+    };
+
+    const submitForm = async (e) => {
+        e.preventDefault();
+        setErrorMessage('');
+
+        if (registerObj.firstName.trim() === '')
+            return setErrorMessage('First Name is required!');
+        if (registerObj.lastName.trim() === '')
+            return setErrorMessage('Last Name is required!');
+        if (registerObj.phoneNumber.trim() === '')
+            return setErrorMessage('Phone Number is required!');
+        if (registerObj.email.trim() === '')
+            return setErrorMessage('Email is required!');
+        if (registerObj.password.trim() === '')
+            return setErrorMessage('Password is required!');
+
+        try {
+            setLoading(true);
+            await saveUser(registerObj);
+        } catch (error) {
+            setErrorMessage('Registration failed. Please try again.');
+        } finally {
+            setLoading(false);
+        }
+    };
 
     const updateFormValue = ({ updateType, value }) => {
-        setErrorMessage('')
-        setRegisterObj({ ...registerObj, [updateType]: value })
-    }
+        setErrorMessage('');
+        setRegisterObj({ ...registerObj, [updateType]: value });
+    };
 
     return (
         <div className="min-h-screen bg-base-200 flex items-center">
@@ -47,24 +78,47 @@ function Register() {
                         <LandingIntro />
                     </div>
                     <div className="py-24 px-10">
-                        <h2 className="text-2xl font-semibold mb-2 text-center">
-                            Register
-                        </h2>
-                        <form onSubmit={(e) => submitForm(e)}>
+                        <h2 className="text-2xl font-semibold mb-2 text-center">Register</h2>
+                        <form onSubmit={submitForm}>
                             <div className="mb-4">
+                                <div className="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <InputText
+                                            type="text"
+                                            defaultValue={registerObj.firstName}
+                                            updateType="firstName"
+                                            containerStyle="mt-4"
+                                            labelTitle="First Name"
+                                            updateFormValue={updateFormValue}
+                                        />
+                                    </div>
+                                    <div>
+                                        <InputText
+                                            type="text"
+                                            defaultValue={registerObj.lastName}
+                                            updateType="lastName"
+                                            containerStyle="mt-4"
+                                            labelTitle="Last Name"
+                                            updateFormValue={updateFormValue}
+                                        />
+                                    </div>
+                                </div>
+
                                 <InputText
-                                    defaultValue={registerObj.name}
-                                    updateType="name"
+                                    type="phoneNumber"
+                                    defaultValue={registerObj.phoneNumber}
+                                    updateType="phoneNumber"
                                     containerStyle="mt-4"
-                                    labelTitle="Name"
+                                    labelTitle="Phone Number"
                                     updateFormValue={updateFormValue}
                                 />
 
                                 <InputText
-                                    defaultValue={registerObj.emailId}
-                                    updateType="emailId"
+                                    type="email"
+                                    defaultValue={registerObj.email}
+                                    updateType="email"
                                     containerStyle="mt-4"
-                                    labelTitle="Email Id"
+                                    labelTitle="Email"
                                     updateFormValue={updateFormValue}
                                 />
 
@@ -78,15 +132,10 @@ function Register() {
                                 />
                             </div>
 
-                            <ErrorText styleClass="mt-8">
-                                {errorMessage}
-                            </ErrorText>
+                            <ErrorText styleClass="mt-8">{errorMessage}</ErrorText>
                             <button
                                 type="submit"
-                                className={
-                                    'btn mt-2 w-full btn-primary' +
-                                    (loading ? ' loading' : '')
-                                }
+                                className={'btn mt-2 w-full btn-primary' + (loading ? ' loading' : '')}
                             >
                                 Register
                             </button>
@@ -94,7 +143,7 @@ function Register() {
                             <div className="text-center mt-4">
                                 Already have an account?{' '}
                                 <Link to="/login">
-                                    <span className="  inline-block  hover:text-primary hover:underline hover:cursor-pointer transition duration-200">
+                                    <span className="inline-block hover:text-primary hover:underline hover:cursor-pointer transition duration-200">
                                         Login
                                     </span>
                                 </Link>
@@ -104,7 +153,7 @@ function Register() {
                 </div>
             </div>
         </div>
-    )
+    );
 }
 
-export default Register
+export default Register;
