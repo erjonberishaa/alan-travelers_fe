@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import LandingIntro from './LandingIntro';
-import ErrorText from '../../components/Typography/ErrorText';
-import InputText from '../../components/Input/InputText';
+import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
+import LandingIntro from './LandingIntro'
+import ErrorText from '../../components/Typography/ErrorText'
+import InputText from '../../components/Input/InputText'
+import { post } from '../../api/api'
+import routes from '../../routes'
 
 function Register() {
     const INITIAL_REGISTER_OBJ = {
@@ -11,64 +13,49 @@ function Register() {
         phoneNumber: '',
         email: '',
         password: '',
-    };
+    }
 
-    const [loading, setLoading] = useState(false);
-    const [errorMessage, setErrorMessage] = useState('');
-    const [registerObj, setRegisterObj] = useState(INITIAL_REGISTER_OBJ);
+    const [loading, setLoading] = useState(false)
+    const [errorMessage, setErrorMessage] = useState('')
+    const [registerObj, setRegisterObj] = useState(INITIAL_REGISTER_OBJ)
 
-    const saveUser = async (userData) => {
+    const saveUser = async () => {
         try {
-            const response = await fetch('http://localhost:8080/users', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(userData),
-            });
-
-            if (!response.ok) {
-                throw new Error('Failed to register user.');
-            }
-
-            const data = await response.json();
-            console.log('User registered successfully:', data);
-
-            window.location.reload();
+            await post('users', registerObj)
         } catch (error) {
-            throw new Error('Failed to register user.');
+            throw new Error('Failed to register user.')
         }
-    };
+    }
 
     const submitForm = async (e) => {
-        e.preventDefault();
-        setErrorMessage('');
+        e.preventDefault()
+        setErrorMessage('')
 
         if (registerObj.firstName.trim() === '')
-            return setErrorMessage('First Name is required!');
+            return setErrorMessage('First Name is required!')
         if (registerObj.lastName.trim() === '')
-            return setErrorMessage('Last Name is required!');
+            return setErrorMessage('Last Name is required!')
         if (registerObj.phoneNumber.trim() === '')
-            return setErrorMessage('Phone Number is required!');
+            return setErrorMessage('Phone Number is required!')
         if (registerObj.email.trim() === '')
-            return setErrorMessage('Email is required!');
+            return setErrorMessage('Email is required!')
         if (registerObj.password.trim() === '')
-            return setErrorMessage('Password is required!');
+            return setErrorMessage('Password is required!')
 
         try {
-            setLoading(true);
-            await saveUser(registerObj);
+            setLoading(true)
+            await saveUser()
         } catch (error) {
-            setErrorMessage('Registration failed. Please try again.');
+            setErrorMessage('Registration failed. Please try again.')
         } finally {
-            setLoading(false);
+            setLoading(false)
         }
-    };
+    }
 
     const updateFormValue = ({ updateType, value }) => {
-        setErrorMessage('');
-        setRegisterObj({ ...registerObj, [updateType]: value });
-    };
+        setErrorMessage('')
+        setRegisterObj({ ...registerObj, [updateType]: value })
+    }
 
     return (
         <div className="min-h-screen bg-base-200 flex items-center">
@@ -78,7 +65,9 @@ function Register() {
                         <LandingIntro />
                     </div>
                     <div className="py-24 px-10">
-                        <h2 className="text-2xl font-semibold mb-2 text-center">Register</h2>
+                        <h2 className="text-2xl font-semibold mb-2 text-center">
+                            Register
+                        </h2>
                         <form onSubmit={submitForm}>
                             <div className="mb-4">
                                 <div className="grid grid-cols-2 gap-4">
@@ -132,10 +121,15 @@ function Register() {
                                 />
                             </div>
 
-                            <ErrorText styleClass="mt-8">{errorMessage}</ErrorText>
+                            <ErrorText styleClass="mt-8">
+                                {errorMessage}
+                            </ErrorText>
                             <button
                                 type="submit"
-                                className={'btn mt-2 w-full btn-primary' + (loading ? ' loading' : '')}
+                                className={
+                                    'btn mt-2 w-full btn-primary' +
+                                    (loading ? ' loading' : '')
+                                }
                             >
                                 Register
                             </button>
@@ -153,7 +147,7 @@ function Register() {
                 </div>
             </div>
         </div>
-    );
+    )
 }
 
-export default Register;
+export default Register
