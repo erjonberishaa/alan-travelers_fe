@@ -2,6 +2,7 @@ module.exports = Object.freeze({
     MODAL_BODY_TYPES: {
         USER_DETAIL: 'USER_DETAIL',
         TICKET_ADD_NEW: 'TICKET_ADD_NEW',
+        HOTEL_ADD_NEW: 'HOTEL_ADD_NEW',
         LEAD_ADD_NEW: 'LEAD_ADD_NEW',
         CONFIRMATION: 'CONFIRMATION',
         DEFAULT: '',
